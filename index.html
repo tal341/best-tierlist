@@ -819,7 +819,6 @@
           let searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
           let searchData = await searchResponse.json();
 
-          // אם לא נמצא, נסה עם טקסט מנורמל
           if (searchData.Response === "False") {
             const normalizedSearch = normalizeSearchText(movieName);
             searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(normalizedSearch)}&apikey=${OMDB_API_KEY}`);
@@ -836,8 +835,7 @@
             return;
           }
 
-          const limitedResults = searchData.Search.slice(0, 5);
-          showSearchResultsWithPosters(limitedResults);
+          showSearchResultsWithPosters(searchData.Search);
 
         } catch (error) {
           alert("Something went wrong. Check your internet?");
