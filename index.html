@@ -8,11 +8,12 @@
   <meta name="author" content="TaL.S">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://i.imgur.com/5pXJY9x.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="https://i.imgur.com/5pXJY9x.png" />
-  <link rel="shortcut icon" href="https://i.imgur.com/5pXJY9x.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/5pXJY9x.png" />
+  <!-- Your Custom Favicon -->
+  <link rel="icon" type="image/png" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.svg" />
+  <link rel="shortcut icon" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://tal341.github.io/TaL-Tier-List-Maker./apple-touch-icon.png" />
+  <link rel="manifest" href="https://tal341.github.io/TaL-Tier-List-Maker./site.webmanifest" />
 
   <style>
     body {
@@ -299,21 +300,22 @@
     /* Delete button on poster */
     .delete-btn {
       position: absolute;
-      top: 5px;
-      right: 5px;
+      top: -8px;
+      right: -8px;
       width: 24px;
       height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: rgba(255,0,0,0.7);
+      background: rgba(255, 0, 0, 0.8);
       color: white;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
       z-index: 3;
       opacity: 0;
       transition: opacity 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
 
     .poster:hover .delete-btn {
@@ -493,19 +495,64 @@
       color: #000;
     }
 
+    /* Search Results Modal with posters */
+    #searchResultsList {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      margin: 8px 0;
+      background: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-result-item:hover {
+      background: #ffdd55;
+      color: #000;
+    }
+
+    .search-poster {
+      width: 60px;
+      height: 90px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #222;
+    }
+
+    .search-info {
+      flex: 1;
+    }
+
+    .search-title {
+      font-weight: bold;
+      margin: 0 0 4px 0;
+    }
+
+    .search-year-type {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
     /* Mobile Settings Fix */
     @media (max-width: 768px) {
       .modal {
-        padding: 20px;
-        margin: 10px;
+        padding: 24px 20px;
+        margin: 16px;
+        font-size: 16px;
       }
       .modal h2 {
         font-size: 22px;
       }
-      .modal p,
-      .modal input,
-      .modal-credit {
-        font-size: 16px;
+      .modal p {
+        font-size: 15px;
+        line-height: 1.5;
       }
       .tier-edit-row {
         flex-direction: column;
@@ -514,11 +561,14 @@
       .tier-edit-row .label-preview {
         text-align: center;
         padding: 8px;
-        font-size: 16px;
+        font-size: 15px;
       }
       .tier-edit-row input {
         padding: 10px;
-        font-size: 16px;
+        font-size: 15px;
+      }
+      .modal-credit {
+        font-size: 13px;
       }
     }
   </style>
@@ -620,11 +670,11 @@
     </div>
   </div>
 
-  <!-- Search Results Modal (Multi-Search) -->
+  <!-- Search Results Modal (Multi-Search with posters) -->
   <div class="modal-overlay" id="searchResultsModal">
     <div class="modal" style="max-width: 500px;">
       <button class="close-modal" id="closeSearchResults">&times;</button>
-      <h2>🎬 Choose a result</h2>
+      <h2>🎬 Choose a movie</h2>
       <div id="searchResultsList" style="max-height: 400px; overflow-y: auto; margin-top: 20px;"></div>
     </div>
   </div>
@@ -679,7 +729,7 @@
         if (!movieName) return;
 
         try {
-          // First, search for multiple results
+          // Search for multiple results
           const searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
           const searchData = await searchResponse.json();
 
@@ -693,14 +743,8 @@
             return;
           }
 
-          // If only one result, use it directly
-          if (searchData.Search.length === 1) {
-            const imdbID = searchData.Search[0].imdbID;
-            await addMovieByIMDbID(imdbID);
-          } else {
-            // Show modal with multiple results
-            showSearchResults(searchData.Search);
-          }
+          // Show modal with results + posters
+          showSearchResultsWithPosters(searchData.Search);
 
         } catch (error) {
           alert("Something went wrong. Check your internet?");
@@ -709,105 +753,88 @@
       }
     });
 
-    // Function to add movie by IMDb ID
-    async function addMovieByIMDbID(imdbID) {
-      try {
-        const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY}`);
-        const data = await response.json();
-
-        if (data.Response === "False") {
-          alert("Error loading movie details.");
-          return;
-        }
-
-        if (!data.Poster || data.Poster === "N/A") {
-          alert("No poster available for this movie 🖼️");
-          return;
-        }
-
-        const img = document.createElement('img');
-        img.src = data.Poster;
-        img.alt = data.Title;
-        img.title = `${data.Title} (${data.Year}) • ${data.Type}`;
-        img.classList.add('poster');
-        img.draggable = true;
-        img.dataset.movieTitle = data.Title;
-
-        // Add delete button
-        const deleteBtn = document.createElement('div');
-        deleteBtn.innerHTML = '🗑️';
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (confirm('Delete this movie?')) {
-            img.remove();
-          }
-        });
-        img.appendChild(deleteBtn);
-
-        img.addEventListener('dragstart', dragStart);
-
-        if (isMobile()) {
-          img.addEventListener('click', function() {
-            currentSelectedPoster = this;
-            document.getElementById('mobileTierPopup').style.display = 'flex';
-          });
-        }
-
-        img.onload = () => {
-          unranked.appendChild(img);
-          movieInput.value = '';
-          movieInput.placeholder = "🎬 Try another one...";
-        };
-
-        img.onerror = () => {
-          alert("Error loading image. Try again?");
-        };
-
-      } catch (error) {
-        alert("Something went wrong. Check your internet?");
-        console.error(error);
-      }
-    }
-
-    // Show search results modal
-    function showSearchResults(results) {
+    // Show search results with posters
+    async function showSearchResultsWithPosters(results) {
       const modal = document.getElementById('searchResultsModal');
       const list = document.getElementById('searchResultsList');
       list.innerHTML = '';
 
-      results.forEach(result => {
-        const item = document.createElement('div');
-        item.style.padding = '12px';
-        item.style.margin = '8px 0';
-        item.style.background = '#333';
-        item.style.borderRadius = '8px';
-        item.style.cursor = 'pointer';
-        item.style.textAlign = 'left';
-        item.innerHTML = `
-          <strong>${result.Title}</strong> (${result.Year})<br>
-          <small>Type: ${result.Type}</small>
-        `;
-        item.addEventListener('click', async () => {
-          await addMovieByIMDbID(result.imdbID);
-          modal.classList.remove('active');
-        });
-        list.appendChild(item);
-      });
+      for (const result of results) {
+        // Fetch full details to get poster
+        try {
+          const detailResponse = await fetch(`https://www.omdbapi.com/?i=${result.imdbID}&apikey=${OMDB_API_KEY}`);
+          const data = await detailResponse.json();
+
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <img class="search-poster" src="${data.Poster && data.Poster !== 'N/A' ? data.Poster : 'https://via.placeholder.com/60x90/333/fff?text=No+Poster'}" alt="${data.Title}">
+            <div class="search-info">
+              <div class="search-title">${data.Title}</div>
+              <div class="search-year-type">${data.Year} • ${data.Type}</div>
+            </div>
+          `;
+
+          item.addEventListener('click', () => {
+            addMovieToBoard(data);
+            modal.classList.remove('active');
+          });
+
+          list.appendChild(item);
+        } catch (err) {
+          console.error("Error fetching movie details:", err);
+        }
+      }
 
       modal.classList.add('active');
     }
 
-    // Close search results modal
-    document.getElementById('closeSearchResults').addEventListener('click', () => {
-      document.getElementById('searchResultsModal').classList.remove('active');
-    });
-
-    document.getElementById('searchResultsModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('searchResultsModal')) {
-        document.getElementById('searchResultsModal').classList.remove('active');
+    // Add selected movie to board
+    function addMovieToBoard(data) {
+      if (!data.Poster || data.Poster === "N/A") {
+        alert("No poster available for this movie 🖼️");
+        return;
       }
-    });
+
+      const img = document.createElement('img');
+      img.src = data.Poster;
+      img.alt = data.Title;
+      img.title = `${data.Title} (${data.Year}) • ${data.Type}`;
+      img.classList.add('poster');
+      img.draggable = true;
+      img.dataset.movieTitle = data.Title;
+
+      // Add delete button
+      const deleteBtn = document.createElement('div');
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm('Delete this movie?')) {
+          img.remove();
+        }
+      });
+      img.appendChild(deleteBtn);
+
+      img.addEventListener('dragstart', dragStart);
+
+      if (isMobile()) {
+        img.addEventListener('click', function() {
+          currentSelectedPoster = this;
+          document.getElementById('mobileTierPopup').style.display = 'flex';
+        });
+      }
+
+      img.onload = () => {
+        unranked.appendChild(img);
+        movieInput.value = '';
+        movieInput.placeholder = "🎬 Try another one...";
+      };
+
+      img.onerror = () => {
+        alert("Error loading image. Try again?");
+      };
+    }
 
     // Manual image upload
     fileInput.addEventListener('change', (event) => {
@@ -1117,6 +1144,17 @@
         prompt("Copy the text below:", text);
       });
     }
+
+    // Close search results modal
+    document.getElementById('closeSearchResults').addEventListener('click', () => {
+      document.getElementById('searchResultsModal').classList.remove('active');
+    });
+
+    document.getElementById('searchResultsModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('searchResultsModal')) {
+        document.getElementById('searchResultsModal').classList.remove('active');
+      }
+    });
 
     // Initialize mobile features
     initMobilePosterClick();
