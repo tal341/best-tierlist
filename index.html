@@ -739,6 +739,7 @@ function addMovieToBoard(data) {
   img.classList.add('poster');
   img.draggable = true;
   img.dataset.movieTitle = data.Title;
+  img.style.position = 'relative'; // ✅ חשוב - מאפשר לכפתור להופיע
 
   const deleteBtn = document.createElement('div');
   deleteBtn.innerHTML = '×';
@@ -782,6 +783,7 @@ fileInput.addEventListener('change', (event) => {
       img.classList.add('poster');
       img.draggable = true;
       img.dataset.originalSrc = e.target.result;
+      img.style.position = 'relative'; // ✅ חשוב - מאפשר לכפתור להופיע
 
       const deleteBtn = document.createElement('div');
       deleteBtn.innerHTML = '×';
@@ -978,6 +980,7 @@ function loadList(listName) {
         img.classList.add('poster');
         img.draggable = true;
         img.addEventListener('dragstart', dragStart);
+        img.style.position = 'relative'; // ✅ חשוב
 
         const deleteBtn = document.createElement('div');
         deleteBtn.innerHTML = '×';
@@ -1011,6 +1014,7 @@ function loadList(listName) {
       img.classList.add('poster');
       img.draggable = true;
       img.addEventListener('dragstart', dragStart);
+      img.style.position = 'relative'; // ✅ חשוב
 
       const deleteBtn = document.createElement('div');
       deleteBtn.innerHTML = '×';
