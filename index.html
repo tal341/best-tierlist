@@ -747,9 +747,13 @@ document.getElementById('showMoreBtn').addEventListener('click', async () => {
       img.remove();
     }
   });
-  img.appendChild(deleteBtn);
+ const wrapper = document.createElement('div');
+wrapper.style.position = 'relative';
+wrapper.style.display = 'inline-block';
+wrapper.appendChild(img);
+wrapper.appendChild(deleteBtn);
 
-  img.addEventListener('dragstart', dragStart);
+wrapper.addEventListener('dragend', ...
 
   if (isMobile()) {
     img.addEventListener('click', function() {
@@ -759,7 +763,7 @@ document.getElementById('showMoreBtn').addEventListener('click', async () => {
   }
 
   img.onload = () => {
-    unranked.appendChild(img);
+    unranked.appendChild(wrapper);
     movieInput.value = '';
     movieInput.placeholder = "🎬 Try another one...";
   };
@@ -777,7 +781,7 @@ fileInput.addEventListener('change', (event) => {
       const img = document.createElement('img');
       img.src = e.target.result;
       img.classList.add('poster');
-      img.draggable = true;
+     wrapper.draggable = true;
       img.dataset.originalSrc = e.target.result;
 
       const deleteBtn = document.createElement('div');
@@ -791,8 +795,7 @@ fileInput.addEventListener('change', (event) => {
       });
       img.appendChild(deleteBtn);
 
-      img.addEventListener('dragstart', dragStart);
-
+     wrapper.addEventListener('dragstart', ...
       if (isMobile()) {
         img.addEventListener('click', function() {
           currentSelectedPoster = this;
@@ -972,7 +975,7 @@ historyModal.addEventListener('click', (e) => {
         img.title = item.title;
         img.classList.add('poster');
         img.draggable = true;
-        img.addEventListener('dragstart', dragStart);
+      wrapper.addEventListener('dragend', ...
 
         const deleteBtn = document.createElement('div');
         deleteBtn.innerHTML = '×';
@@ -1005,8 +1008,7 @@ historyModal.addEventListener('click', (e) => {
       img.title = item.title;
       img.classList.add('poster');
       img.draggable = true;
-      img.addEventListener('dragstart', dragStart);
-
+    wrapper.addEventListener('dragend', ...
       const deleteBtn = document.createElement('div');
       deleteBtn.innerHTML = '×';
       deleteBtn.className = 'delete-btn';
@@ -1083,3 +1085,4 @@ initMobilePosterClick();
 </script>
 </body>
 </html>
+
