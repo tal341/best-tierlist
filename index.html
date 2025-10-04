@@ -196,15 +196,15 @@ h1 {
   padding: 30px 20px;
 }
 .tier {
-  min-height: 120px;
-  border-radius: 12px;
-  padding: 16px;
+  min-height: 140px;
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
   backdrop-filter: blur(3px);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   transition: transform 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -255,38 +255,38 @@ h1 {
 .tier.C::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background: rgba(200,50,50,0.1); z-index: 1; pointer-events: none; }
 
 .poster {
-  width: 100px;
+  width: 120px;
   height: auto;
   margin: 0;
   cursor: grab;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   transition: transform 0.2s ease;
   z-index: 2;
   position: relative;
 }
 .poster:hover {
-  transform: scale(1.03);
-  box-shadow: 0 5px 14px rgba(0,0,0,0.5);
+  transform: scale(1.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
 }
 
 .delete-btn {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 20px;
-  height: 20px;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: #ff3333;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   border: 1px solid white;
   opacity: 0;
   transform: scale(0.7);
@@ -312,12 +312,12 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px 15px;
-  gap: 18px;
-  border-top: 2px solid rgba(80,80,80,0.5);
+  padding: 40px 30px;
+  gap: 30px;
+  border-top: 3px solid rgba(80,80,80,0.5);
   background: rgba(20,20,20,0.6);
-  border-radius: 12px;
-  margin-top: 20px;
+  border-radius: 16px;
+  margin-top: 30px;
   backdrop-filter: blur(5px);
 }
 #unranked-label {
@@ -601,7 +601,6 @@ input[type="file"],
     </div>
   </div>
 </div>
-
 <script>
 const fileInput = document.getElementById('fileInput');
 const movieInput = document.getElementById('movieInput');
@@ -725,8 +724,7 @@ document.getElementById('showMoreBtn').addEventListener('click', async () => {
   const nextBatch = allSearchResults.slice(0, displayedResultsCount);
   showSearchResultsWithPosters(nextBatch);
 });
-
-function addMovieToBoard(data) {
+  function addMovieToBoard(data) {
   if (!data.Poster || data.Poster === "N/A") {
     alert("No poster available for this movie 🖼️");
     return;
@@ -740,41 +738,15 @@ function addMovieToBoard(data) {
   img.draggable = true;
   img.dataset.movieTitle = data.Title;
 
-  // יצירת כפתור מחיקה פשוט
   const deleteBtn = document.createElement('div');
-  deleteBtn.innerText = '×';
-  deleteBtn.style.cssText = `
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: red;
-    color: white;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.2s;
-  `;
+  deleteBtn.innerHTML = '×';
+  deleteBtn.className = 'delete-btn';
   deleteBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     if (confirm('Delete this movie?')) {
       img.remove();
     }
   });
-
-  img.addEventListener('mouseenter', () => {
-    deleteBtn.style.opacity = '1';
-  });
-  img.addEventListener('mouseleave', () => {
-    deleteBtn.style.opacity = '0';
-  });
-
   img.appendChild(deleteBtn);
 
   img.addEventListener('dragstart', dragStart);
@@ -796,7 +768,6 @@ function addMovieToBoard(data) {
     alert("Error loading image. Try again?");
   };
 }
-
 fileInput.addEventListener('change', (event) => {
   const files = event.target.files;
   for (const file of files) {
@@ -810,39 +781,14 @@ fileInput.addEventListener('change', (event) => {
       img.dataset.originalSrc = e.target.result;
 
       const deleteBtn = document.createElement('div');
-      deleteBtn.innerText = '×';
-      deleteBtn.style.cssText = `
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: red;
-        color: white;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 999;
-        opacity: 0;
-        transition: opacity 0.2s;
-      `;
+      deleteBtn.innerHTML = '×';
+      deleteBtn.className = 'delete-btn';
       deleteBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         if (confirm('Delete this movie?')) {
           img.remove();
         }
       });
-
-      img.addEventListener('mouseenter', () => {
-        deleteBtn.style.opacity = '1';
-      });
-      img.addEventListener('mouseleave', () => {
-        deleteBtn.style.opacity = '0';
-      });
-
       img.appendChild(deleteBtn);
 
       img.addEventListener('dragstart', dragStart);
@@ -859,7 +805,7 @@ fileInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
-function dragStart(e) {
+  function dragStart(e) {
   e.dataTransfer.setData('text/plain', e.target.src);
 }
 
@@ -1007,8 +953,7 @@ historyModal.addEventListener('click', (e) => {
     historyModal.classList.remove('active');
   }
 });
-
-function loadList(listName) {
+  function loadList(listName) {
   const savedData = localStorage.getItem(listName);
   if (!savedData) return;
 
@@ -1021,10 +966,6 @@ function loadList(listName) {
     const tierEl = document.querySelector(`.tier[data-tier="${tierName}"]`);
     if (tierEl && tiersData[tierName]) {
       tiersData[tierName].forEach(item => {
-        const wrapper = document.createElement('div');
-        wrapper.style.position = 'relative';
-        wrapper.style.display = 'inline-block';
-
         const img = document.createElement('img');
         img.src = item.src;
         img.alt = item.alt;
@@ -1035,49 +976,22 @@ function loadList(listName) {
 
         const deleteBtn = document.createElement('div');
         deleteBtn.innerHTML = '×';
-        deleteBtn.style.position = 'absolute';
-        deleteBtn.style.top = '-6px';
-        deleteBtn.style.right = '-6px';
-        deleteBtn.style.width = '20px';
-        deleteBtn.style.height = '20px';
-        deleteBtn.style.borderRadius = '50%';
-        deleteBtn.style.background = '#ff3333';
-        deleteBtn.style.color = 'white';
-        deleteBtn.style.fontSize = '12px';
-        deleteBtn.style.fontWeight = 'bold';
-        deleteBtn.style.display = 'flex';
-        deleteBtn.style.alignItems = 'center';
-        deleteBtn.style.justifyContent = 'center';
-        deleteBtn.style.cursor = 'pointer';
-        deleteBtn.style.opacity = '0';
-        deleteBtn.style.transform = 'scale(0.7)';
-        deleteBtn.style.transition = 'all 0.2s ease';
+        deleteBtn.className = 'delete-btn';
         deleteBtn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (confirm('Delete this movie?')) {
-            wrapper.remove();
+            img.remove();
           }
         });
-
-        img.addEventListener('mouseenter', () => {
-          deleteBtn.style.opacity = '1';
-          deleteBtn.style.transform = 'scale(1)';
-        });
-        img.addEventListener('mouseleave', () => {
-          deleteBtn.style.opacity = '0';
-          deleteBtn.style.transform = 'scale(0.7)';
-        });
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(deleteBtn);
+        img.appendChild(deleteBtn);
 
         if (isMobile()) {
           img.addEventListener('click', function() {
-            currentSelectedPoster = wrapper;
+            currentSelectedPoster = this;
             document.getElementById('mobileTierPopup').style.display = 'flex';
           });
         }
-        tierEl.appendChild(wrapper);
+        tierEl.appendChild(img);
       });
     }
   }
@@ -1085,10 +999,6 @@ function loadList(listName) {
   const unrankedArea = document.getElementById('unranked-area');
   if (tiersData.unranked) {
     tiersData.unranked.forEach(item => {
-      const wrapper = document.createElement('div');
-      wrapper.style.position = 'relative';
-      wrapper.style.display = 'inline-block';
-
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.alt;
@@ -1099,49 +1009,22 @@ function loadList(listName) {
 
       const deleteBtn = document.createElement('div');
       deleteBtn.innerHTML = '×';
-      deleteBtn.style.position = 'absolute';
-      deleteBtn.style.top = '-6px';
-      deleteBtn.style.right = '-6px';
-      deleteBtn.style.width = '20px';
-      deleteBtn.style.height = '20px';
-      deleteBtn.style.borderRadius = '50%';
-      deleteBtn.style.background = '#ff3333';
-      deleteBtn.style.color = 'white';
-      deleteBtn.style.fontSize = '12px';
-      deleteBtn.style.fontWeight = 'bold';
-      deleteBtn.style.display = 'flex';
-      deleteBtn.style.alignItems = 'center';
-      deleteBtn.style.justifyContent = 'center';
-      deleteBtn.style.cursor = 'pointer';
-      deleteBtn.style.opacity = '0';
-      deleteBtn.style.transform = 'scale(0.7)';
-      deleteBtn.style.transition = 'all 0.2s ease';
+      deleteBtn.className = 'delete-btn';
       deleteBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         if (confirm('Delete this movie?')) {
-          wrapper.remove();
+          img.remove();
         }
       });
-
-      img.addEventListener('mouseenter', () => {
-        deleteBtn.style.opacity = '1';
-        deleteBtn.style.transform = 'scale(1)';
-      });
-      img.addEventListener('mouseleave', () => {
-        deleteBtn.style.opacity = '0';
-        deleteBtn.style.transform = 'scale(0.7)';
-      });
-
-      wrapper.appendChild(img);
-      wrapper.appendChild(deleteBtn);
+      img.appendChild(deleteBtn);
 
       if (isMobile()) {
         img.addEventListener('click', function() {
-          currentSelectedPoster = wrapper;
+          currentSelectedPoster = this;
           document.getElementById('mobileTierPopup').style.display = 'flex';
         });
       }
-      unrankedArea.appendChild(wrapper);
+      unrankedArea.appendChild(img);
     });
   }
 
@@ -1197,6 +1080,6 @@ document.getElementById('searchResultsModal').addEventListener('click', (e) => {
 });
 
 initMobilePosterClick();
-
-
-
+</script>
+</body>
+</html>
