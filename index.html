@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="manifest" href="site.webmanifest" />
+<head><link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta charset="UTF-8" />
   <title>🎬 My Movie Tier List</title>
   <meta name="description" content="Create your personal movie tier list! Type a name, drag to rank, save as image — simple, beautiful, free.">
@@ -13,7 +8,7 @@
   <meta name="author" content="TaL.S">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- תיקון קישורי favicon - הסרת / מיותר -->
+  <!-- Your Custom Favicon -->
   <link rel="icon" type="image/png" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.svg" />
   <link rel="shortcut icon" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.ico" />
@@ -91,7 +86,7 @@
       box-shadow: 0 0 12px rgba(255,221,85,0.4);
     }
 
-    /* Modal */
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -106,7 +101,6 @@
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-      padding: 20px;
     }
 
     .modal-overlay.active {
@@ -118,13 +112,11 @@
       background: #1a1a1a;
       width: 90%;
       max-width: 500px;
-      max-height: 85vh;
       padding: 30px;
       border-radius: 18px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       position: relative;
       animation: modalPop 0.3s ease-out;
-      overflow-y: auto;
     }
 
     @keyframes modalPop {
@@ -156,7 +148,6 @@
       color: #aaa;
       cursor: pointer;
       transition: color 0.2s;
-      z-index: 10;
     }
 
     .close-modal:hover {
@@ -216,12 +207,11 @@
       color: #ffdd55;
     }
 
-    /* החזרת גדלים מקוריים למחשב */
     .tier-list {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      padding: 20px;
+      gap: 20px;
+      padding: 25px 15px;
     }
 
     .tier {
@@ -231,7 +221,7 @@
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 20px; /* Increased gap for less density */
       backdrop-filter: blur(3px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       transition: transform 0.2s ease;
@@ -290,12 +280,6 @@
     .tier.C   { background: linear-gradient(135deg, rgba(180,80,180,0.1), transparent); border: 2px solid rgba(200,50,50,0.3); position: relative; }
     .tier.C::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background: rgba(200,50,50,0.1); z-index: 1; pointer-events: none; }
 
-    .poster-wrapper {
-      position: relative;
-      display: inline-block;
-      z-index: 2;
-    }
-
     .poster {
       width: 120px;
       height: auto;
@@ -304,7 +288,8 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform 0.2s ease;
-      display: block;
+      z-index: 2;
+      position: relative;
     }
 
     .poster:hover {
@@ -312,115 +297,238 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.6);
     }
 
+    /* Delete button on poster — FORCED VISIBLE */
     .delete-btn {
       position: absolute;
-      top: -8px;
-      right: -8px;
+      top: -10px;
+      right: -10px;
       width: 28px;
       height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: rgba(255, 0, 0, 0.9);
+      background: #ff3b3b;
       color: white;
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
-      z-index: 3;
-      opacity: 0;
-      transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      border: 2px solid white;
+      z-index: 10;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+      border: 2px solid #fff;
     }
 
-    .poster-wrapper:hover .delete-btn {
+    /* Always visible on desktop on hover, always visible on mobile */
+    .poster:hover .delete-btn {
       opacity: 1;
       transform: scale(1.1);
     }
 
-    /* שיפור מובייל - הגדרות פחות צפופות */
     @media (max-width: 768px) {
       .delete-btn {
         opacity: 1;
+        transform: scale(1);
       }
-      h1 {
-        font-size: 1.8rem;
+      .tier-label {
+        font-size: 26px; /* Larger on mobile */
       }
-      
-      .made-by {
-        font-size: 11px;
-        padding: 3px 8px;
-        right: 55px;
+      .tier-subtitle {
+        font-size: 12px;
       }
-
       .modal {
-        max-height: 80vh;
-        overflow-y: auto;
-        padding: 24px 20px;
-        margin: 16px;
-        font-size: 16px;
+        padding: 30px 20px; /* More spacious */
+        margin: 20px;
       }
-      
       .modal h2 {
-        font-size: 22px;
+        font-size: 24px;
       }
-      
       .modal p {
-        font-size: 15px;
-        line-height: 1.5;
-      }
-      
-      .tier-edit-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .tier-edit-row .label-preview {
-        text-align: center;
-        padding: 8px;
-        font-size: 15px;
-      }
-      
-      .tier-edit-row input {
-        padding: 10px;
-        font-size: 15px;
-      }
-      
-      .modal-credit {
-        font-size: 13px;
-      }
-
-      .tier-list {
-        padding: 20px 12px;
-        gap: 18px;
-      }
-
-      .tier {
-        padding: 18px;
-        gap: 12px;
-        min-height: 120px;
-      }
-
-      #unranked-area {
-        padding: 20px 12px;
-        gap: 12px;
+        font-size: 16px;
       }
     }
 
-    /* עיצוב חדש לתוצאות חיפוש - 3 תוצאות + כפתור הצג עוד */
+    #unranked-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 30px 20px; /* More padding */
+      gap: 25px; /* Even more space between posters */
+      border-top: 3px solid rgba(80,80,80,0.5);
+      background: rgba(20,20,20,0.6);
+      border-radius: 14px;
+      margin-top: 25px;
+      backdrop-filter: blur(5px);
+    }
+
+    #unranked-label {
+      text-align: center;
+      font-size: 26px; /* Slightly larger */
+      font-weight: bold;
+      padding: 15px;
+      color: #cccccc;
+      text-shadow: 0 0 6px rgba(0,0,0,0.8);
+      width: 100%;
+      background: rgba(30,30,30,0.7);
+      border-radius: 10px;
+      backdrop-filter: blur(3px);
+    }
+
+    #movieInput {
+      display: block;
+      margin: 25px auto;
+      padding: 16px 20px;
+      width: 80%;
+      max-width: 420px;
+      background: rgba(30,30,30,0.8);
+      color: white;
+      border: 2px solid rgba(100,100,100,0.5);
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      outline: none;
+      backdrop-filter: blur(3px);
+      transition: all 0.2s;
+    }
+
+    #movieInput:focus {
+      border-color: rgba(200,200,200,0.8);
+      background: rgba(40,40,40,0.9);
+      transform: translateY(-2px);
+    }
+
+    input[type="file"],
+    .download-btn,
+    .reset-btn,
+    #saveListBtn,
+    #loadHistoryBtn,
+    #shareBtn {
+      display: block;
+      margin: 18px auto;
+      padding: 14px 26px;
+      background: rgba(40,40,40,0.8);
+      color: white;
+      border: 2px solid rgba(100,100,100,0.5);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      backdrop-filter: blur(3px);
+      transition: all 0.2s ease;
+    }
+
+    .download-btn {
+      background: rgba(60,60,80,0.7);
+      border-color: rgba(100,100,150,0.4);
+    }
+    .download-btn:hover {
+      background: rgba(70,70,100,0.9);
+    }
+
+    .reset-btn {
+      background: rgba(80,40,40,0.7);
+      border-color: rgba(150,80,80,0.4);
+    }
+    .reset-btn:hover {
+      background: rgba(100,50,50,0.9);
+    }
+
+    #saveListBtn {
+      background: rgba(40,60,40,0.7);
+      border-color: rgba(80,120,80,0.4);
+    }
+    #saveListBtn:hover {
+      background: rgba(50,70,50,0.9);
+    }
+
+    #loadHistoryBtn {
+      background: rgba(50,50,70,0.7);
+      border-color: rgba(100,100,150,0.4);
+    }
+    #loadHistoryBtn:hover {
+      background: rgba(60,60,90,0.9);
+    }
+
+    #shareBtn {
+      background: rgba(60,40,80,0.7);
+      border-color: rgba(120,80,160,0.4);
+    }
+    #shareBtn:hover {
+      background: rgba(70,50,90,0.9);
+    }
+
+    /* Mobile Tier Selector Popup */
+    .mobile-tier-popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: none;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      max-width: 92%;
+    }
+
+    .mobile-tier-btn {
+      padding: 12px 16px;
+      background: rgba(50,50,50,0.8);
+      border: 1px solid #444;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s;
+      font-size: 16px;
+    }
+
+    .mobile-tier-btn:hover {
+      background: #ffdd55;
+      color: #000;
+    }
+
+    .mobile-tier-btn.SSS { background: rgba(255,30,30,0.2); }
+    .mobile-tier-btn.SS  { background: rgba(255,140,0,0.2); }
+    .mobile-tier-btn.S   { background: rgba(255,220,0,0.2); }
+    .mobile-tier-btn.Ap  { background: rgba(100,255,100,0.2); }
+    .mobile-tier-btn.B   { background: rgba(150,200,255,0.2); }
+    .mobile-tier-btn.C   { background: rgba(200,50,50,0.2); }
+
+    /* History Modal */
+    #historyList div {
+      padding: 14px;
+      margin: 10px 0;
+      background: #333;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    #historyList div:hover {
+      background: #ffdd55;
+      color: #000;
+    }
+
+    /* Search Results Modal with posters */
     #searchResultsList {
-      max-height: 500px;
+      max-height: 420px;
       overflow-y: auto;
     }
 
     .search-result-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px;
-      margin: 8px 0;
+      gap: 14px;
+      padding: 14px;
+      margin: 10px 0;
       background: #333;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.2s;
     }
@@ -431,11 +539,12 @@
     }
 
     .search-poster {
-      width: 60px;
-      height: 90px;
-      border-radius: 6px;
+      width: 65px;
+      height: 95px;
+      border-radius: 8px;
       object-fit: cover;
       background: #222;
+      border: 1px solid #444;
     }
 
     .search-info {
@@ -444,34 +553,29 @@
 
     .search-title {
       font-weight: bold;
-      margin: 0 0 4px 0;
+      margin: 0 0 6px 0;
+      font-size: 16px;
     }
 
     .search-year-type {
-      font-size: 13px;
-      opacity: 0.8;
+      font-size: 14px;
+      opacity: 0.85;
     }
 
     .show-more-btn {
       display: block;
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background: rgba(255,221,85,0.2);
-      color: #ffdd55;
-      border: 2px solid rgba(255,221,85,0.4);
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      background: rgba(60,60,80,0.6);
+      color: white;
+      border: 1px solid rgba(100,100,150,0.4);
       border-radius: 8px;
       cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      transition: all 0.2s;
-      direction: rtl; /* תמיכה בעברית */
-      text-align: center;
+      font-size: 14px;
     }
 
     .show-more-btn:hover {
-      background: #ffdd55;
-      color: #000;
+      background: rgba(70,70,100,0.8);
     }
   </style>
 </head>
@@ -508,14 +612,14 @@
       <button class="close-modal" id="closeSettings">&times;</button>
       <h2>🛠 Settings & Help</h2>
       
-      <p><strong>How to use:</strong></p>
-      <p>• Type a movie or series name in the input above and press Enter.</p>
-      <p>• The poster that appears can be dragged directly to any Tier using your mouse.</p>
-      <p>• On mobile — tap the poster to open a menu and choose a Tier easily.</p>
+      <p><strong>How to use:</strong><br>
+         Type a movie or series name in the input above and press Enter.<br>
+         The poster that appears can be dragged directly to any Tier using your mouse.<br>
+         On mobile — tap the poster to open a menu and choose a Tier easily.</p>
 
-      <p><strong>Saving:</strong></p>
-      <p>• Click "Save as Image" to download your tier list as a PNG file.</p>
-      <p>• Or use "Save List" to store your ranking on this device and start a new one.</p>
+      <p><strong>Saving:</strong><br>
+         Click "Save as Image" to download your tier list as a PNG file.<br>
+         Or use "Save List" to store your ranking on this device and start a new one.</p>
 
       <div class="edit-tier-section">
         <h3>✏️ Rename Tiers (for you only)</h3>
@@ -572,67 +676,41 @@
     </div>
   </div>
 
-  <!-- Search Results Modal (Multi-Search with posters) -->
+  <!-- Search Results Modal (Multi-Search with posters + Show More) -->
   <div class="modal-overlay" id="searchResultsModal">
-    <div class="modal" style="max-width: 500px;">
+    <div class="modal" style="max-width: 520px;">
       <button class="close-modal" id="closeSearchResults">&times;</button>
       <h2>🎬 Choose a movie</h2>
-      <div id="searchResultsList" style="max-height: 400px; overflow-y: auto; margin-top: 20px;"></div>
+      <div id="searchResultsList" style="max-height: 420px; overflow-y: auto; margin-top: 20px;"></div>
+      <button id="showMoreBtn" class="show-more-btn" style="display: none;">Show More Results</button>
+      <div style="margin-top: 20px; text-align: center; font-size: 14px; color: #aaa;">
+        Not what you wanted? Try a more specific title.
+      </div>
     </div>
   </div>
-
-  <script>
+    <script>
     const fileInput = document.getElementById('fileInput');
     const movieInput = document.getElementById('movieInput');
     const unranked = document.getElementById('unranked-area');
     const tiers = document.querySelectorAll('.tier');
     const OMDB_API_KEY = "ee77ebb9";
 
+    // Check if device is mobile
     function isMobile() {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
-    function createPosterWrapper(imgSrc, title, year, type) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'poster-wrapper';
-      wrapper.draggable = true;
-      
-      const img = document.createElement('img');
-      img.src = imgSrc;
-      img.alt = title;
-      img.title = `${title} (${year}) • ${type}`;
-      img.classList.add('poster');
-      img.dataset.movieTitle = title;
-
-      const deleteBtn = document.createElement('div');
-      deleteBtn.innerHTML = '✕';
-      deleteBtn.className = 'delete-btn';
-      deleteBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (confirm('Delete this movie?')) {
-          wrapper.remove();
-        }
-      });
-
-      wrapper.appendChild(img);
-      wrapper.appendChild(deleteBtn);
-
-      wrapper.addEventListener('dragstart', dragStart);
-
-      if (isMobile()) {
-        wrapper.addEventListener('click', function(e) {
-          if (!e.target.classList.contains('delete-btn')) {
-            currentSelectedPoster = this;
-            document.getElementById('mobileTierPopup').style.display = 'flex';
-          }
-        });
-      }
-
-      return wrapper;
-    }
-
+    // Poster click for mobile
     function initMobilePosterClick() {
       if (!isMobile()) return;
+
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('poster')) {
+          currentSelectedPoster = e.target;
+          const popup = document.getElementById('mobileTierPopup');
+          popup.style.display = 'flex';
+        }
+      });
 
       const popupButtons = document.querySelectorAll('.mobile-tier-btn');
       popupButtons.forEach(btn => {
@@ -655,6 +733,7 @@
 
     let currentSelectedPoster = null;
     let allSearchResults = [];
+    let displayedResultsCount = 5;
 
     movieInput.addEventListener('keypress', async (e) => {
       if (e.key === 'Enter') {
@@ -662,16 +741,19 @@
         if (!movieName) return;
 
         try {
-          let searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
+          // First, try exact match
+          let searchResponse = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
           let searchData = await searchResponse.json();
 
-          if (searchData.Response === "False") {
-            const normalizedQuery = movieName.replace(/['']/g, '');
-            if (normalizedQuery !== movieName) {
-              searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(normalizedQuery)}&apikey=${OMDB_API_KEY}`);
-              searchData = await searchResponse.json();
-            }
+          if (searchData.Response !== "False" && searchData.Poster && searchData.Poster !== "N/A") {
+            // Exact match found with poster — add directly
+            addMovieToBoard(searchData);
+            return;
           }
+
+          // If not found, search broadly (contains)
+          searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
+          searchData = await searchResponse.json();
 
           if (searchData.Response === "False") {
             alert("Movie not found 😕\nTry another name or in English.");
@@ -683,11 +765,12 @@
             return;
           }
 
+          // Store all results
           allSearchResults = searchData.Search;
-          const initialResults = allSearchResults.slice(0, 5);
-          const hasMore = allSearchResults.length > 5;
-          
-          showSearchResultsWithPosters(initialResults, hasMore);
+          displayedResultsCount = 5;
+
+          // Show first 5 results
+          showSearchResultsWithPosters(allSearchResults.slice(0, displayedResultsCount));
 
         } catch (error) {
           alert("Something went wrong. Check your internet?");
@@ -696,12 +779,16 @@
       }
     });
 
-    async function showSearchResultsWithPosters(results, hasMore = false) {
+    // Show search results with posters
+    async function showSearchResultsWithPosters(results) {
       const modal = document.getElementById('searchResultsModal');
       const list = document.getElementById('searchResultsList');
+      const showMoreBtn = document.getElementById('showMoreBtn');
+      
       list.innerHTML = '';
 
       for (const result of results) {
+        // Fetch full details to get poster
         try {
           const detailResponse = await fetch(`https://www.omdbapi.com/?i=${result.imdbID}&apikey=${OMDB_API_KEY}`);
           const data = await detailResponse.json();
@@ -709,7 +796,7 @@
           const item = document.createElement('div');
           item.className = 'search-result-item';
           item.innerHTML = `
-            <img class="search-poster" src="${data.Poster && data.Poster !== 'N/A' ? data.Poster : 'https://via.placeholder.com/60x90/333/fff?text=No+Poster'}" alt="${data.Title}">
+            <img class="search-poster" src="${data.Poster && data.Poster !== 'N/A' ? data.Poster : 'https://via.placeholder.com/65x95/333/fff?text=No+Img'}" alt="${data.Title}">
             <div class="search-info">
               <div class="search-title">${data.Title}</div>
               <div class="search-year-type">${data.Year} • ${data.Type}</div>
@@ -727,31 +814,61 @@
         }
       }
 
-      if (hasMore) {
-        const showMoreBtn = document.createElement('button');
-        showMoreBtn.className = 'show-more-btn';
-        const remainingCount = allSearchResults.length - 5;
-        showMoreBtn.textContent = `🔍 עוד תוצאות (${remainingCount} נוספים)`;
-        showMoreBtn.addEventListener('click', () => {
-          showSearchResultsWithPosters(allSearchResults, false);
-        });
-        list.appendChild(showMoreBtn);
+      // Show/Hide "Show More" button
+      if (displayedResultsCount < allSearchResults.length) {
+        showMoreBtn.style.display = 'block';
+      } else {
+        showMoreBtn.style.display = 'none';
       }
 
       modal.classList.add('active');
     }
 
+    // Show More Results Button
+    document.getElementById('showMoreBtn').addEventListener('click', async () => {
+      displayedResultsCount += 5;
+      const nextBatch = allSearchResults.slice(0, displayedResultsCount);
+      showSearchResultsWithPosters(nextBatch);
+    });
+
+    // Add selected movie to board
     function addMovieToBoard(data) {
       if (!data.Poster || data.Poster === "N/A") {
         alert("No poster available for this movie 🖼️");
         return;
       }
 
-      const wrapper = createPosterWrapper(data.Poster, data.Title, data.Year, data.Type);
-      
-      const img = wrapper.querySelector('.poster');
+      const img = document.createElement('img');
+      img.src = data.Poster;
+      img.alt = data.Title;
+      img.title = `${data.Title} (${data.Year}) • ${data.Type}`;
+      img.classList.add('poster');
+      img.draggable = true;
+      img.dataset.movieTitle = data.Title;
+
+      // Add delete button — FORCED VISIBLE & WORKING
+      const deleteBtn = document.createElement('div');
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (confirm('Delete this movie?')) {
+          img.remove();
+        }
+      });
+      img.appendChild(deleteBtn);
+
+      img.addEventListener('dragstart', dragStart);
+
+      if (isMobile()) {
+        img.addEventListener('click', function() {
+          currentSelectedPoster = this;
+          document.getElementById('mobileTierPopup').style.display = 'flex';
+        });
+      }
+
       img.onload = () => {
-        unranked.appendChild(wrapper);
+        unranked.appendChild(img);
         movieInput.value = '';
         movieInput.placeholder = "🎬 Try another one...";
       };
@@ -761,25 +878,48 @@
       };
     }
 
+    // Manual image upload
     fileInput.addEventListener('change', (event) => {
       const files = event.target.files;
       for (const file of files) {
         if (!file.type.startsWith('image/')) continue;
         const reader = new FileReader();
         reader.onload = (e) => {
-          const wrapper = createPosterWrapper(e.target.result, 'Custom Image', '', 'image');
-          wrapper.dataset.originalSrc = e.target.result;
-          unranked.appendChild(wrapper);
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('poster');
+          img.draggable = true;
+          img.dataset.originalSrc = e.target.result;
+
+          // Add delete button — FORCED VISIBLE & WORKING
+          const deleteBtn = document.createElement('div');
+          deleteBtn.innerHTML = '🗑️';
+          deleteBtn.className = 'delete-btn';
+          deleteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (confirm('Delete this movie?')) {
+              img.remove();
+            }
+          });
+          img.appendChild(deleteBtn);
+
+          img.addEventListener('dragstart', dragStart);
+
+          if (isMobile()) {
+            img.addEventListener('click', function() {
+              currentSelectedPoster = this;
+              document.getElementById('mobileTierPopup').style.display = 'flex';
+            });
+          }
+
+          unranked.appendChild(img);
         };
         reader.readAsDataURL(file);
       }
     });
 
     function dragStart(e) {
-      const wrapper = e.target.closest('.poster-wrapper');
-      if (wrapper) {
-        e.dataTransfer.setData('text/plain', wrapper.querySelector('.poster').src);
-      }
+      e.dataTransfer.setData('text/plain', e.target.src);
     }
 
     tiers.forEach(tier => {
@@ -787,8 +927,8 @@
       tier.addEventListener('drop', (e) => {
         e.preventDefault();
         const src = e.dataTransfer.getData('text/plain');
-        const wrapper = document.querySelector(`.poster[src='${src}']`)?.closest('.poster-wrapper');
-        if (wrapper) tier.appendChild(wrapper);
+        const img = document.querySelector(`img[src='${src}']`);
+        if (img) tier.appendChild(img);
       });
     });
 
@@ -796,13 +936,13 @@
     unranked.addEventListener('drop', (e) => {
       e.preventDefault();
       const src = e.dataTransfer.getData('text/plain');
-      const wrapper = document.querySelector(`.poster[src='${src}']`)?.closest('.poster-wrapper');
-      if (wrapper) unranked.appendChild(wrapper);
+      const img = document.querySelector(`img[src='${src}']`);
+      if (img) unranked.appendChild(img);
     });
 
     document.getElementById('resetBtn').addEventListener('click', () => {
-      const allWrappers = document.querySelectorAll('.poster-wrapper');
-      allWrappers.forEach(wrapper => unranked.appendChild(wrapper));
+      const allPosters = document.querySelectorAll('.poster');
+      allPosters.forEach(poster => unranked.appendChild(poster));
     });
 
     document.getElementById('downloadBtn').addEventListener('click', () => {
@@ -854,6 +994,7 @@
       });
     });
 
+    // 💾 Save List Functionality
     let listCounter = 1;
 
     document.getElementById('saveListBtn').addEventListener('click', () => {
@@ -881,6 +1022,7 @@
       listCounter++;
     });
 
+    // 📚 Load History Modal
     const historyModal = document.getElementById('historyModal');
 
     document.getElementById('loadHistoryBtn').addEventListener('click', () => {
@@ -894,12 +1036,13 @@
         if (saved) {
           hasLists = true;
           const btn = document.createElement('div');
-          btn.style.padding = '12px';
-          btn.style.margin = '8px 0';
+          btn.style.padding = '14px';
+          btn.style.margin = '10px 0';
           btn.style.background = '#333';
-          btn.style.borderRadius = '8px';
+          btn.style.borderRadius = '10px';
           btn.style.cursor = 'pointer';
           btn.style.textAlign = 'center';
+          btn.style.fontSize = '16px';
           btn.textContent = key;
           btn.addEventListener('click', () => {
             loadList(key);
@@ -910,7 +1053,7 @@
       }
 
       if (!hasLists) {
-        historyList.innerHTML = '<p style="text-align:center; color:#aaa;">No saved lists yet.</p>';
+        historyList.innerHTML = '<p style="text-align:center; color:#aaa; font-size:16px;">No saved lists yet.</p>';
       }
 
       historyModal.classList.add('active');
@@ -932,17 +1075,40 @@
 
       const tiersData = JSON.parse(savedData);
 
-      document.querySelectorAll('.poster-wrapper').forEach(w => w.remove());
+      document.querySelectorAll('.poster').forEach(p => p.remove());
 
       for (const tierName in tiersData) {
         if (tierName === 'unranked') continue;
         const tierEl = document.querySelector(`.tier[data-tier="${tierName}"]`);
         if (tierEl && tiersData[tierName]) {
           tiersData[tierName].forEach(item => {
-            const wrapper = createPosterWrapper(item.src, item.alt, '', '');
-            const img = wrapper.querySelector('.poster');
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.alt;
             img.title = item.title;
-            tierEl.appendChild(wrapper);
+            img.classList.add('poster');
+            img.draggable = true;
+            img.addEventListener('dragstart', dragStart);
+
+            // Add delete button
+            const deleteBtn = document.createElement('div');
+            deleteBtn.innerHTML = '🗑️';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              if (confirm('Delete this movie?')) {
+                img.remove();
+              }
+            });
+            img.appendChild(deleteBtn);
+
+            if (isMobile()) {
+              img.addEventListener('click', function() {
+                currentSelectedPoster = this;
+                document.getElementById('mobileTierPopup').style.display = 'flex';
+              });
+            }
+            tierEl.appendChild(img);
           });
         }
       }
@@ -950,16 +1116,40 @@
       const unrankedArea = document.getElementById('unranked-area');
       if (tiersData.unranked) {
         tiersData.unranked.forEach(item => {
-          const wrapper = createPosterWrapper(item.src, item.alt, '', '');
-          const img = wrapper.querySelector('.poster');
+          const img = document.createElement('img');
+          img.src = item.src;
+          img.alt = item.alt;
           img.title = item.title;
-          unrankedArea.appendChild(wrapper);
+          img.classList.add('poster');
+          img.draggable = true;
+          img.addEventListener('dragstart', dragStart);
+
+          // Add delete button
+          const deleteBtn = document.createElement('div');
+          deleteBtn.innerHTML = '🗑️';
+          deleteBtn.className = 'delete-btn';
+          deleteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (confirm('Delete this movie?')) {
+              img.remove();
+            }
+          });
+          img.appendChild(deleteBtn);
+
+          if (isMobile()) {
+            img.addEventListener('click', function() {
+              currentSelectedPoster = this;
+              document.getElementById('mobileTierPopup').style.display = 'flex';
+            });
+          }
+          unrankedArea.appendChild(img);
         });
       }
 
       alert(`📂 Loaded "${listName}"`);
     }
 
+    // 📤 Share List Functionality
     document.getElementById('shareBtn').addEventListener('click', () => {
       let shareText = "My Movie Tier List:\n\n";
       
@@ -998,6 +1188,7 @@
       });
     }
 
+    // Close search results modal
     document.getElementById('closeSearchResults').addEventListener('click', () => {
       document.getElementById('searchResultsModal').classList.remove('active');
     });
@@ -1008,8 +1199,8 @@
       }
     });
 
+    // Initialize mobile features
     initMobilePosterClick();
   </script>
 </body>
 </html>
-
