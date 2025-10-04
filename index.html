@@ -349,27 +349,25 @@
       }
 
       .modal {
-        padding: 20px 16px;
-        margin: 10px;
+        padding: 24px 20px;
+        margin: 16px;
+        font-size: 16px;
         max-height: 80vh;
-        font-size: 15px;
+        overflow-y: auto;
       }
       
       .modal h2 {
-        font-size: 20px;
-        margin-bottom: 15px;
+        font-size: 22px;
       }
       
       .modal p {
-        font-size: 14px;
+        font-size: 15px;
         line-height: 1.5;
-        margin-bottom: 12px;
       }
       
       .tier-edit-row {
         flex-direction: column;
         align-items: stretch;
-        padding: 10px;
       }
       
       .tier-edit-row .label-preview {
@@ -384,7 +382,7 @@
       }
       
       .modal-credit {
-        font-size: 12px;
+        font-size: 13px;
       }
 
       .tier-list {
@@ -664,11 +662,13 @@
         if (!movieName) return;
 
         try {
+          // נסה קודם עם הטקסט המקורי
           let searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
           let searchData = await searchResponse.json();
 
+          // אם לא מצא, נסה בלי apostrophes
           if (searchData.Response === "False") {
-            const normalizedSearch = normalizeSearchText(movieName);
+            const normalizedSearch = movieName.replace(/['']/g, '');
             searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(normalizedSearch)}&apikey=${OMDB_API_KEY}`);
             searchData = await searchResponse.json();
           }
@@ -683,8 +683,8 @@
             return;
           }
 
-          allSearchResults = searchData.Search;
-          showSearchResultsWithPosters(allSearchResults.slice(0, 3), allSearchResults.length > 3);
+          // Show modal with results + posters
+          showSearchResultsWithPosters(searchData.Search);
 
         } catch (error) {
           alert("Something went wrong. Check your internet?");
@@ -727,7 +727,7 @@
       if (hasMore) {
         const showMoreBtn = document.createElement('button');
         showMoreBtn.className = 'show-more-btn';
-        showMoreBtn.textContent = `🔍 הצג עוד תוצאות (${allSearchResults.length - 3} נוספים)`;
+        showMoreBtn.textContent = `🔍 הצג עוד תוצאות (${results.length - 3} נוספים)`;
         showMoreBtn.addEventListener('click', () => {
           showSearchResultsWithPosters(allSearchResults, false);
         });
