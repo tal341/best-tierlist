@@ -8,12 +8,12 @@
   <meta name="author" content="TaL.S">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- תיקון קישורי favicon - הסרת / מיותר -->
-  <link rel="icon" type="image/png" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.svg" />
-  <link rel="shortcut icon" href="https://tal341.github.io/TaL-Tier-List-Maker./favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://tal341.github.io/TaL-Tier-List-Maker./apple-touch-icon.png" />
-  <link rel="manifest" href="https://tal341.github.io/TaL-Tier-List-Maker./site.webmanifest" />
+  <!-- תיקון קישורי favicon - הסרת נקודה מיותרת מהנתיב -->
+  <link rel="icon" type="image/png" href="https://tal341.github.io/TaL-Tier-List-Maker/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="https://tal341.github.io/TaL-Tier-List-Maker/favicon.svg" />
+  <link rel="shortcut icon" href="https://tal341.github.io/TaL-Tier-List-Maker/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://tal341.github.io/TaL-Tier-List-Maker/apple-touch-icon.png" />
+  <link rel="manifest" href="https://tal341.github.io/TaL-Tier-List-Maker/site.webmanifest" />
 
   <style>
     body {
@@ -101,7 +101,8 @@
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-      padding: 20px;
+      padding: 15px;
+      box-sizing: border-box;
     }
 
     .modal-overlay.active {
@@ -120,6 +121,7 @@
       position: relative;
       animation: modalPop 0.3s ease-out;
       overflow-y: auto;
+      box-sizing: border-box;
     }
 
     @keyframes modalPop {
@@ -211,12 +213,12 @@
       color: #ffdd55;
     }
 
-    /* שיפור ריווח - tier list פחות צפוף */
+    /* שיפור ריווח למחשב - tier list פחות צפוף */
     .tier-list {
       display: flex;
       flex-direction: column;
-      gap: 25px;
-      padding: 30px 20px;
+      gap: 25px; /* מרווח בין הדרגות */
+      padding: 30px; /* מרווח מהצדדים */
     }
 
     .tier {
@@ -226,7 +228,7 @@
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 18px; /* מרווח בין פוסטרים */
       backdrop-filter: blur(3px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       transition: transform 0.2s ease;
@@ -285,7 +287,7 @@
     .tier.C   { background: linear-gradient(135deg, rgba(180,80,180,0.1), transparent); border: 2px solid rgba(200,50,50,0.3); position: relative; }
     .tier.C::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background: rgba(200,50,50,0.1); z-index: 1; pointer-events: none; }
 
-    /* תיקון כפתור מחיקה - wrapper לפוסטר */
+    /* תיקון מבני - wrapper לפוסטר וכפתור מחיקה */
     .poster-wrapper {
       position: relative;
       display: inline-block;
@@ -321,6 +323,7 @@
       background: rgba(255, 0, 0, 0.9);
       color: white;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
       z-index: 3;
       opacity: 0;
@@ -334,17 +337,15 @@
       transform: scale(1.1);
     }
 
-    @media (max-width: 768px) {
-      .delete-btn {
-        opacity: 1;
-      }
+    .delete-btn:active {
+      transform: scale(1);
     }
 
     #unranked-area {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 30px 20px;
+      padding: 30px;
       gap: 18px;
       border-top: 3px solid rgba(80,80,80,0.5);
       background: rgba(20,20,20,0.6);
@@ -364,6 +365,7 @@
       background: rgba(30,30,30,0.7);
       border-radius: 10px;
       backdrop-filter: blur(3px);
+      box-sizing: border-box;
     }
 
     #movieInput {
@@ -411,45 +413,16 @@
       transition: all 0.2s ease;
     }
 
-    .download-btn {
-      background: rgba(60,60,80,0.7);
-      border-color: rgba(100,100,150,0.4);
-    }
-    .download-btn:hover {
-      background: rgba(70,70,100,0.9);
-    }
-
-    .reset-btn {
-      background: rgba(80,40,40,0.7);
-      border-color: rgba(150,80,80,0.4);
-    }
-    .reset-btn:hover {
-      background: rgba(100,50,50,0.9);
-    }
-
-    #saveListBtn {
-      background: rgba(40,60,40,0.7);
-      border-color: rgba(80,120,80,0.4);
-    }
-    #saveListBtn:hover {
-      background: rgba(50,70,50,0.9);
-    }
-
-    #loadHistoryBtn {
-      background: rgba(50,50,70,0.7);
-      border-color: rgba(100,100,150,0.4);
-    }
-    #loadHistoryBtn:hover {
-      background: rgba(60,60,90,0.9);
-    }
-
-    #shareBtn {
-      background: rgba(60,40,80,0.7);
-      border-color: rgba(120,80,160,0.4);
-    }
-    #shareBtn:hover {
-      background: rgba(70,50,90,0.9);
-    }
+    .download-btn { background: rgba(60,60,80,0.7); border-color: rgba(100,100,150,0.4); }
+    .download-btn:hover { background: rgba(70,70,100,0.9); }
+    .reset-btn { background: rgba(80,40,40,0.7); border-color: rgba(150,80,80,0.4); }
+    .reset-btn:hover { background: rgba(100,50,50,0.9); }
+    #saveListBtn { background: rgba(40,60,40,0.7); border-color: rgba(80,120,80,0.4); }
+    #saveListBtn:hover { background: rgba(50,70,50,0.9); }
+    #loadHistoryBtn { background: rgba(50,50,70,0.7); border-color: rgba(100,100,150,0.4); }
+    #loadHistoryBtn:hover { background: rgba(60,60,90,0.9); }
+    #shareBtn { background: rgba(60,40,80,0.7); border-color: rgba(120,80,160,0.4); }
+    #shareBtn:hover { background: rgba(70,50,90,0.9); }
 
     /* Mobile Tier Selector Popup */
     .mobile-tier-popup {
@@ -480,11 +453,7 @@
       transition: all 0.2s;
     }
 
-    .mobile-tier-btn:hover {
-      background: #ffdd55;
-      color: #000;
-    }
-
+    .mobile-tier-btn:hover { background: #ffdd55; color: #000; }
     .mobile-tier-btn.SSS { background: rgba(255,30,30,0.2); }
     .mobile-tier-btn.SS  { background: rgba(255,140,0,0.2); }
     .mobile-tier-btn.S   { background: rgba(255,220,0,0.2); }
@@ -494,130 +463,34 @@
 
     /* History Modal */
     #historyList div {
-      padding: 12px;
-      margin: 8px 0;
-      background: #333;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
+      padding: 12px; margin: 8px 0; background: #333; border-radius: 8px; cursor: pointer; text-align: center;
     }
-
-    #historyList div:hover {
-      background: #ffdd55;
-      color: #000;
-    }
+    #historyList div:hover { background: #ffdd55; color: #000; }
 
     /* Search Results Modal with posters */
-    #searchResultsList {
-      max-height: 400px;
-      overflow-y: auto;
-    }
+    #searchResultsList { max-height: 400px; overflow-y: auto; }
+    .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px; margin: 8px 0; background: #333; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+    .search-result-item:hover { background: #ffdd55; color: #000; }
+    .search-poster { width: 60px; height: 90px; border-radius: 6px; object-fit: cover; background: #222; }
+    .search-info { flex: 1; }
+    .search-title { font-weight: bold; margin: 0 0 4px 0; }
+    .search-year-type { font-size: 13px; opacity: 0.8; }
 
-    .search-result-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      margin: 8px 0;
-      background: #333;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .search-result-item:hover {
-      background: #ffdd55;
-      color: #000;
-    }
-
-    .search-poster {
-      width: 60px;
-      height: 90px;
-      border-radius: 6px;
-      object-fit: cover;
-      background: #222;
-    }
-
-    .search-info {
-      flex: 1;
-    }
-
-    .search-title {
-      font-weight: bold;
-      margin: 0 0 4px 0;
-    }
-
-    .search-year-type {
-      font-size: 13px;
-      opacity: 0.8;
-    }
-
-    /* שיפור מובייל - הגדרות פחות צפופות */
+    /* שיפור מובייל - עיצוב והגדרות פחות צפופות */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .made-by {
-        font-size: 11px;
-        padding: 3px 8px;
-        right: 55px;
-      }
-
-      .modal {
-        padding: 20px 16px;
-        margin: 10px;
-        max-height: 80vh;
-        font-size: 15px;
-      }
-      
-      .modal h2 {
-        font-size: 20px;
-        margin-bottom: 15px;
-      }
-      
-      .modal p {
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 12px;
-      }
-      
-      .tier-edit-row {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 10px;
-      }
-      
-      .tier-edit-row .label-preview {
-        text-align: center;
-        padding: 8px;
-        font-size: 15px;
-      }
-      
-      .tier-edit-row input {
-        padding: 10px;
-        font-size: 15px;
-      }
-      
-      .modal-credit {
-        font-size: 12px;
-      }
-
-      .tier-list {
-        padding: 20px 12px;
-        gap: 18px;
-      }
-
-      .tier {
-        padding: 18px;
-        gap: 12px;
-        min-height: 120px;
-      }
-
-      #unranked-area {
-        padding: 20px 12px;
-        gap: 12px;
-      }
+      .delete-btn { opacity: 1; }
+      h1 { font-size: 1.8rem; }
+      .made-by { font-size: 11px; padding: 3px 8px; right: 55px; }
+      .modal { padding: 20px 16px; margin: 10px; max-height: 80vh; font-size: 15px; }
+      .modal h2 { font-size: 20px; margin-bottom: 15px; }
+      .modal p { font-size: 14px; line-height: 1.5; margin-bottom: 12px; }
+      .tier-edit-row { flex-direction: column; align-items: stretch; padding: 10px; }
+      .tier-edit-row .label-preview { text-align: center; padding: 8px; font-size: 15px; }
+      .tier-edit-row input { padding: 10px; font-size: 15px; }
+      .modal-credit { font-size: 12px; }
+      .tier-list { padding: 20px 12px; gap: 18px; }
+      .tier { padding: 18px; gap: 12px; min-height: 120px; }
+      #unranked-area { padding: 20px 12px; gap: 12px; }
     }
   </style>
 </head>
@@ -665,30 +538,12 @@
 
       <div class="edit-tier-section">
         <h3>✏️ Rename Tiers (for you only)</h3>
-        <div class="tier-edit-row">
-          <span class="label-preview">SSS</span>
-          <input type="text" class="tier-input" data-target="SSS" placeholder="New name for SSS" value="SSS">
-        </div>
-        <div class="tier-edit-row">
-          <span class="label-preview">SS</span>
-          <input type="text" class="tier-input" data-target="SS" placeholder="New name for SS" value="SS">
-        </div>
-        <div class="tier-edit-row">
-          <span class="label-preview">S</span>
-          <input type="text" class="tier-input" data-target="S" placeholder="New name for S" value="S">
-        </div>
-        <div class="tier-edit-row">
-          <span class="label-preview">A+</span>
-          <input type="text" class="tier-input" data-target="A+" placeholder="New name for A+" value="A+">
-        </div>
-        <div class="tier-edit-row">
-          <span class="label-preview">B</span>
-          <input type="text" class="tier-input" data-target="B" placeholder="New name for B" value="B">
-        </div>
-        <div class="tier-edit-row">
-          <span class="label-preview">C</span>
-          <input type="text" class="tier-input" data-target="C" placeholder="New name for C" value="C">
-        </div>
+        <div class="tier-edit-row"><span class="label-preview">SSS</span><input type="text" class="tier-input" data-target="SSS" placeholder="New name for SSS" value="SSS"></div>
+        <div class="tier-edit-row"><span class="label-preview">SS</span><input type="text" class="tier-input" data-target="SS" placeholder="New name for SS" value="SS"></div>
+        <div class="tier-edit-row"><span class="label-preview">S</span><input type="text" class="tier-input" data-target="S" placeholder="New name for S" value="S"></div>
+        <div class="tier-edit-row"><span class="label-preview">A+</span><input type="text" class="tier-input" data-target="A+" placeholder="New name for A+" value="A+"></div>
+        <div class="tier-edit-row"><span class="label-preview">B</span><input type="text" class="tier-input" data-target="B" placeholder="New name for B" value="B"></div>
+        <div class="tier-edit-row"><span class="label-preview">C</span><input type="text" class="tier-input" data-target="C" placeholder="New name for C" value="C"></div>
       </div>
 
       <div class="modal-credit">
@@ -734,7 +589,6 @@
     const tiers = document.querySelectorAll('.tier');
     const OMDB_API_KEY = "ee77ebb9";
 
-    // Check if device is mobile
     function isMobile() {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -747,7 +601,7 @@
       const img = document.createElement('img');
       img.src = imgSrc;
       img.alt = title;
-      img.title = `${title} (${year}) • ${type}`;
+      img.title = `${title} (${year || 'N/A'}) • ${type || 'N/A'}`;
       img.classList.add('poster');
       img.dataset.movieTitle = title;
 
@@ -774,14 +628,10 @@
           }
         });
       }
-
       return wrapper;
     }
 
-    // Poster click for mobile
     function initMobilePosterClick() {
-      if (!isMobile()) return;
-
       const popupButtons = document.querySelectorAll('.mobile-tier-btn');
       popupButtons.forEach(btn => {
         if (btn.id === 'cancelMobileSelect') {
@@ -804,10 +654,7 @@
     let currentSelectedPoster = null;
 
     function normalizeSearchText(text) {
-      return text.toLowerCase()
-        .replace(/['']/g, '')
-        .replace(/[^\w\s]/g, '')
-        .trim();
+      return text.toLowerCase().replace(/['']/g, '').replace(/[^\w\s]/g, '').trim();
     }
 
     movieInput.addEventListener('keypress', async (e) => {
@@ -819,23 +666,23 @@
           let searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(movieName)}&apikey=${OMDB_API_KEY}`);
           let searchData = await searchResponse.json();
 
+          // אם לא נמצא, נסה עם טקסט מנורמל (בלי גרש וסימנים)
           if (searchData.Response === "False") {
             const normalizedSearch = normalizeSearchText(movieName);
-            searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(normalizedSearch)}&apikey=${OMDB_API_KEY}`);
-            searchData = await searchResponse.json();
+            if (normalizedSearch !== movieName.toLowerCase()) {
+              searchResponse = await fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(normalizedSearch)}&apikey=${OMDB_API_KEY}`);
+              searchData = await searchResponse.json();
+            }
           }
 
           if (searchData.Response === "False") {
-            alert("Movie not found 😕\nTry another name or in English.");
+            alert("Movie not found 😕
+Try another name or in English.");
             return;
           }
-
-          if (!searchData.Search || searchData.Search.length === 0) {
-            alert("No results found. Try a different title.");
-            return;
-          }
-
-          showSearchResultsWithPosters(searchData.Search);
+          
+          const limitedResults = searchData.Search.slice(0, 5);
+          showSearchResultsWithPosters(limitedResults);
 
         } catch (error) {
           alert("Something went wrong. Check your internet?");
@@ -844,7 +691,6 @@
       }
     });
 
-    // Show search results with posters
     async function showSearchResultsWithPosters(results) {
       const modal = document.getElementById('searchResultsModal');
       const list = document.getElementById('searchResultsList');
@@ -864,22 +710,18 @@
               <div class="search-year-type">${data.Year} • ${data.Type}</div>
             </div>
           `;
-
           item.addEventListener('click', () => {
             addMovieToBoard(data);
             modal.classList.remove('active');
           });
-
           list.appendChild(item);
         } catch (err) {
           console.error("Error fetching movie details:", err);
         }
       }
-
       modal.classList.add('active');
     }
 
-    // Add selected movie to board
     function addMovieToBoard(data) {
       if (!data.Poster || data.Poster === "N/A") {
         alert("No poster available for this movie 🖼️");
@@ -887,23 +729,17 @@
       }
 
       const wrapper = createPosterWrapper(data.Poster, data.Title, data.Year, data.Type);
-      
       const img = wrapper.querySelector('.poster');
       img.onload = () => {
         unranked.appendChild(wrapper);
         movieInput.value = '';
         movieInput.placeholder = "🎬 Try another one...";
       };
-
-      img.onerror = () => {
-        alert("Error loading image. Try again?");
-      };
+      img.onerror = () => { alert("Error loading image. Try again?"); };
     }
 
-    // Manual image upload
     fileInput.addEventListener('change', (event) => {
-      const files = event.target.files;
-      for (const file of files) {
+      for (const file of event.target.files) {
         if (!file.type.startsWith('image/')) continue;
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -927,7 +763,7 @@
       tier.addEventListener('drop', (e) => {
         e.preventDefault();
         const src = e.dataTransfer.getData('text/plain');
-        const wrapper = document.querySelector(`.poster[src='${src}']`)?.closest('.poster-wrapper');
+        const wrapper = Array.from(document.querySelectorAll('.poster-wrapper')).find(w => w.querySelector(`.poster[src='${src}']`));
         if (wrapper) tier.appendChild(wrapper);
       });
     });
@@ -936,25 +772,21 @@
     unranked.addEventListener('drop', (e) => {
       e.preventDefault();
       const src = e.dataTransfer.getData('text/plain');
-      const wrapper = document.querySelector(`.poster[src='${src}']`)?.closest('.poster-wrapper');
+      const wrapper = Array.from(document.querySelectorAll('.poster-wrapper')).find(w => w.querySelector(`.poster[src='${src}']`));
       if (wrapper) unranked.appendChild(wrapper);
     });
 
     document.getElementById('resetBtn').addEventListener('click', () => {
-      const allWrappers = document.querySelectorAll('.poster-wrapper');
-      allWrappers.forEach(wrapper => unranked.appendChild(wrapper));
+      document.querySelectorAll('.poster-wrapper').forEach(wrapper => unranked.appendChild(wrapper));
     });
 
     document.getElementById('downloadBtn').addEventListener('click', () => {
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
       script.onload = () => {
-        const element = document.querySelector('.tier-list').parentNode;
+        const element = document.querySelector('body');
         html2canvas(element, {
-          backgroundColor: '#0a0a0a',
-          scale: 2,
-          useCORS: true,
-          allowTaint: true
+          backgroundColor: '#0a0a0a', scale: 2, useCORS: true, allowTaint: true
         }).then(canvas => {
           const link = document.createElement('a');
           link.download = 'my-movie-tierlist.png';
@@ -967,54 +799,28 @@
 
     const settingsBtn = document.getElementById('settingsBtn');
     const closeSettings = document.getElementById('closeSettings');
-    const modalOverlay = document.getElementById('settingsModal');
+    const settingsModal = document.getElementById('settingsModal');
     const tierInputs = document.querySelectorAll('.tier-input');
 
-    settingsBtn.addEventListener('click', () => {
-      modalOverlay.classList.add('active');
-    });
-
-    closeSettings.addEventListener('click', () => {
-      modalOverlay.classList.remove('active');
-    });
-
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        modalOverlay.classList.remove('active');
-      }
-    });
+    settingsBtn.addEventListener('click', () => settingsModal.classList.add('active'));
+    closeSettings.addEventListener('click', () => settingsModal.classList.remove('active'));
+    settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.remove('active'); });
 
     tierInputs.forEach(input => {
       input.addEventListener('input', function() {
         const targetTier = this.dataset.target;
         const labelElement = document.querySelector(`.tier[data-tier="${targetTier}"] .tier-label`);
-        if (labelElement) {
-          labelElement.textContent = this.value;
-        }
+        if (labelElement) { labelElement.textContent = this.value; }
       });
     });
 
-    // 💾 Save List Functionality
     let listCounter = 1;
-
     document.getElementById('saveListBtn').addEventListener('click', () => {
       const tiersData = {};
-      document.querySelectorAll('.tier').forEach(tier => {
-        const tierName = tier.dataset.tier;
-        const posters = Array.from(tier.querySelectorAll('.poster')).map(img => ({
-          src: img.src,
-          alt: img.alt,
-          title: img.title
-        }));
-        tiersData[tierName] = posters;
+      document.querySelectorAll('.tier, #unranked-area').forEach(container => {
+        const tierName = container.id === 'unranked-area' ? 'unranked' : container.dataset.tier;
+        tiersData[tierName] = Array.from(container.querySelectorAll('.poster')).map(img => ({ src: img.src, alt: img.alt, title: img.title }));
       });
-
-      const unrankedPosters = Array.from(document.querySelectorAll('#unranked-area .poster')).map(img => ({
-        src: img.src,
-        alt: img.alt,
-        title: img.title
-      }));
-      tiersData.unranked = unrankedPosters;
 
       const listName = `List ${listCounter}`;
       localStorage.setItem(listName, JSON.stringify(tiersData));
@@ -1022,26 +828,15 @@
       listCounter++;
     });
 
-    // 📚 Load History Modal
     const historyModal = document.getElementById('historyModal');
-
     document.getElementById('loadHistoryBtn').addEventListener('click', () => {
       const historyList = document.getElementById('historyList');
       historyList.innerHTML = '';
-
       let hasLists = false;
-      for (let i = 1; i <= 50; i++) {
-        const key = `List ${i}`;
-        const saved = localStorage.getItem(key);
-        if (saved) {
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('List ')) {
           hasLists = true;
           const btn = document.createElement('div');
-          btn.style.padding = '12px';
-          btn.style.margin = '8px 0';
-          btn.style.background = '#333';
-          btn.style.borderRadius = '8px';
-          btn.style.cursor = 'pointer';
-          btn.style.textAlign = 'center';
           btn.textContent = key;
           btn.addEventListener('click', () => {
             loadList(key);
@@ -1049,85 +844,50 @@
           });
           historyList.appendChild(btn);
         }
-      }
-
-      if (!hasLists) {
-        historyList.innerHTML = '<p style="text-align:center; color:#aaa;">No saved lists yet.</p>';
-      }
-
+      });
+      if (!hasLists) { historyList.innerHTML = '<p style="text-align:center; color:#aaa;">No saved lists yet.</p>'; }
       historyModal.classList.add('active');
     });
 
-    document.getElementById('closeHistory').addEventListener('click', () => {
-      historyModal.classList.remove('active');
-    });
-
-    historyModal.addEventListener('click', (e) => {
-      if (e.target === historyModal) {
-        historyModal.classList.remove('active');
-      }
-    });
+    document.getElementById('closeHistory').addEventListener('click', () => historyModal.classList.remove('active'));
+    historyModal.addEventListener('click', (e) => { if (e.target === historyModal) historyModal.classList.remove('active'); });
 
     function loadList(listName) {
       const savedData = localStorage.getItem(listName);
       if (!savedData) return;
-
       const tiersData = JSON.parse(savedData);
-
       document.querySelectorAll('.poster-wrapper').forEach(w => w.remove());
 
-      for (const tierName in tiersData) {
-        if (tierName === 'unranked') continue;
-        const tierEl = document.querySelector(`.tier[data-tier="${tierName}"]`);
-        if (tierEl && tiersData[tierName]) {
+      Object.keys(tiersData).forEach(tierName => {
+        const container = tierName === 'unranked' ? unranked : document.querySelector(`.tier[data-tier="${tierName}"]`);
+        if (container && tiersData[tierName]) {
           tiersData[tierName].forEach(item => {
             const wrapper = createPosterWrapper(item.src, item.alt, '', '');
-            const img = wrapper.querySelector('.poster');
-            img.title = item.title;
-            tierEl.appendChild(wrapper);
+            wrapper.querySelector('.poster').title = item.title;
+            container.appendChild(wrapper);
           });
         }
-      }
-
-      const unrankedArea = document.getElementById('unranked-area');
-      if (tiersData.unranked) {
-        tiersData.unranked.forEach(item => {
-          const wrapper = createPosterWrapper(item.src, item.alt, '', '');
-          const img = wrapper.querySelector('.poster');
-          img.title = item.title;
-          unrankedArea.appendChild(wrapper);
-        });
-      }
-
+      });
       alert(`📂 Loaded "${listName}"`);
     }
 
-    // 📤 Share List Functionality
     document.getElementById('shareBtn').addEventListener('click', () => {
-      let shareText = "My Movie Tier List:\n\n";
-      
+      let shareText = "My Movie Tier List:
+";
       document.querySelectorAll('.tier').forEach(tier => {
-        const tierName = tier.dataset.tier;
+        const tierName = tier.querySelector('.tier-label').textContent;
         const movies = Array.from(tier.querySelectorAll('.poster')).map(img => img.alt || "Unknown Movie");
-        if (movies.length > 0) {
-          shareText += `${tierName}: ${movies.join(', ')}\n`;
-        }
+        if (movies.length > 0) { shareText += `${tierName}: ${movies.join(', ')}
+`; }
       });
-
-      const unrankedMovies = Array.from(document.querySelectorAll('#unranked-area .poster')).map(img => img.alt || "Unknown Movie");
-      if (unrankedMovies.length > 0) {
-        shareText += `\nUnranked: ${unrankedMovies.join(', ')}`;
-      }
-
-      shareText += "\n\nCreated with ❤️ by TaL.S";
+      const unrankedMovies = Array.from(unranked.querySelectorAll('.poster')).map(img => img.alt || "Unknown Movie");
+      if (unrankedMovies.length > 0) { shareText += `
+Unranked: ${unrankedMovies.join(', ')}`; }
+      shareText += "
+Created with TaL's Tier List Maker";
 
       if (navigator.share) {
-        navigator.share({
-          title: 'My Movie Tier List',
-          text: shareText
-        }).catch(err => {
-          fallbackCopyTextToClipboard(shareText);
-        });
+        navigator.share({ title: 'My Movie Tier List', text: shareText }).catch(() => fallbackCopyTextToClipboard(shareText));
       } else {
         fallbackCopyTextToClipboard(shareText);
       }
@@ -1135,25 +895,20 @@
 
     function fallbackCopyTextToClipboard(text) {
       navigator.clipboard.writeText(text).then(() => {
-        alert("📋 Copied to clipboard!\nPaste anywhere to share.");
+        alert("📋 Copied to clipboard!
+Paste anywhere to share.");
       }).catch(() => {
         prompt("Copy the text below:", text);
       });
     }
 
-    // Close search results modal
-    document.getElementById('closeSearchResults').addEventListener('click', () => {
-      document.getElementById('searchResultsModal').classList.remove('active');
-    });
+    const searchResultsModal = document.getElementById('searchResultsModal');
+    document.getElementById('closeSearchResults').addEventListener('click', () => searchResultsModal.classList.remove('active'));
+    searchResultsModal.addEventListener('click', (e) => { if (e.target === searchResultsModal) searchResultsModal.classList.remove('active'); });
 
-    document.getElementById('searchResultsModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('searchResultsModal')) {
-        document.getElementById('searchResultsModal').classList.remove('active');
-      }
-    });
-
-    // Initialize mobile features
-    initMobilePosterClick();
+    if (isMobile()) {
+        initMobilePosterClick();
+    }
   </script>
 </body>
 </html>
