@@ -732,10 +732,6 @@ function addMovieToBoard(data) {
     return;
   }
 
-  const wrapper = document.createElement('div');
-  wrapper.style.position = 'relative';
-  wrapper.style.display = 'inline-block';
-
   const img = document.createElement('img');
   img.src = data.Poster;
   img.alt = data.Title;
@@ -744,55 +740,54 @@ function addMovieToBoard(data) {
   img.draggable = true;
   img.dataset.movieTitle = data.Title;
 
+  // יצירת כפתור מחיקה פשוט
   const deleteBtn = document.createElement('div');
-  deleteBtn.innerHTML = '×';
-  deleteBtn.style.position = 'absolute';
-  deleteBtn.style.top = '-6px';
-  deleteBtn.style.right = '-6px';
-  deleteBtn.style.width = '20px';
-  deleteBtn.style.height = '20px';
-  deleteBtn.style.borderRadius = '50%';
-  deleteBtn.style.background = '#ff3333';
-  deleteBtn.style.color = 'white';
-  deleteBtn.style.fontSize = '12px';
-  deleteBtn.style.fontWeight = 'bold';
-  deleteBtn.style.display = 'flex';
-  deleteBtn.style.alignItems = 'center';
-  deleteBtn.style.justifyContent = 'center';
-  deleteBtn.style.cursor = 'pointer';
-  deleteBtn.style.opacity = '0';
-  deleteBtn.style.transform = 'scale(0.7)';
-  deleteBtn.style.transition = 'all 0.2s ease';
+  deleteBtn.innerText = '×';
+  deleteBtn.style.cssText = `
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.2s;
+  `;
   deleteBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     if (confirm('Delete this movie?')) {
-      wrapper.remove();
+      img.remove();
     }
   });
 
   img.addEventListener('mouseenter', () => {
     deleteBtn.style.opacity = '1';
-    deleteBtn.style.transform = 'scale(1)';
   });
   img.addEventListener('mouseleave', () => {
     deleteBtn.style.opacity = '0';
-    deleteBtn.style.transform = 'scale(0.7)';
   });
 
-  wrapper.appendChild(img);
-  wrapper.appendChild(deleteBtn);
+  img.appendChild(deleteBtn);
 
   img.addEventListener('dragstart', dragStart);
 
   if (isMobile()) {
     img.addEventListener('click', function() {
-      currentSelectedPoster = wrapper;
+      currentSelectedPoster = this;
       document.getElementById('mobileTierPopup').style.display = 'flex';
     });
   }
 
   img.onload = () => {
-    unranked.appendChild(wrapper);
+    unranked.appendChild(img);
     movieInput.value = '';
     movieInput.placeholder = "🎬 Try another one...";
   };
@@ -808,10 +803,6 @@ fileInput.addEventListener('change', (event) => {
     if (!file.type.startsWith('image/')) continue;
     const reader = new FileReader();
     reader.onload = (e) => {
-      const wrapper = document.createElement('div');
-      wrapper.style.position = 'relative';
-      wrapper.style.display = 'inline-block';
-
       const img = document.createElement('img');
       img.src = e.target.result;
       img.classList.add('poster');
@@ -819,58 +810,55 @@ fileInput.addEventListener('change', (event) => {
       img.dataset.originalSrc = e.target.result;
 
       const deleteBtn = document.createElement('div');
-      deleteBtn.innerHTML = '×';
-      deleteBtn.style.position = 'absolute';
-      deleteBtn.style.top = '-6px';
-      deleteBtn.style.right = '-6px';
-      deleteBtn.style.width = '20px';
-      deleteBtn.style.height = '20px';
-      deleteBtn.style.borderRadius = '50%';
-      deleteBtn.style.background = '#ff3333';
-      deleteBtn.style.color = 'white';
-      deleteBtn.style.fontSize = '12px';
-      deleteBtn.style.fontWeight = 'bold';
-      deleteBtn.style.display = 'flex';
-      deleteBtn.style.alignItems = 'center';
-      deleteBtn.style.justifyContent = 'center';
-      deleteBtn.style.cursor = 'pointer';
-      deleteBtn.style.opacity = '0';
-      deleteBtn.style.transform = 'scale(0.7)';
-      deleteBtn.style.transition = 'all 0.2s ease';
+      deleteBtn.innerText = '×';
+      deleteBtn.style.cssText = `
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.2s;
+      `;
       deleteBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         if (confirm('Delete this movie?')) {
-          wrapper.remove();
+          img.remove();
         }
       });
 
       img.addEventListener('mouseenter', () => {
         deleteBtn.style.opacity = '1';
-        deleteBtn.style.transform = 'scale(1)';
       });
       img.addEventListener('mouseleave', () => {
         deleteBtn.style.opacity = '0';
-        deleteBtn.style.transform = 'scale(0.7)';
       });
 
-      wrapper.appendChild(img);
-      wrapper.appendChild(deleteBtn);
+      img.appendChild(deleteBtn);
 
       img.addEventListener('dragstart', dragStart);
 
       if (isMobile()) {
         img.addEventListener('click', function() {
-          currentSelectedPoster = wrapper;
+          currentSelectedPoster = this;
           document.getElementById('mobileTierPopup').style.display = 'flex';
         });
       }
 
-      unranked.appendChild(wrapper);
+      unranked.appendChild(img);
     };
     reader.readAsDataURL(file);
   }
 });
-
 function dragStart(e) {
   e.dataTransfer.setData('text/plain', e.target.src);
 }
@@ -1209,5 +1197,6 @@ document.getElementById('searchResultsModal').addEventListener('click', (e) => {
 });
 
 initMobilePosterClick();
+
 
 
