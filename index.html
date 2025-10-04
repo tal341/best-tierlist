@@ -732,6 +732,52 @@ function addMovieToBoard(data) {
     return;
   }
 
+  const container = document.createElement('div');
+  container.style.position = 'relative';
+  container.style.display = 'inline-block';
+  container.style.margin = '0';
+
+  const img = document.createElement('img');
+  img.src = data.Poster;
+  img.alt = data.Title;
+  img.title = `${data.Title} (${data.Year}) • ${data.Type}`;
+  img.classList.add('poster');
+  img.draggable = true;
+  img.dataset.movieTitle = data.Title;
+
+  const deleteBtn = document.createElement('div');
+  deleteBtn.innerHTML = '×';
+  deleteBtn.className = 'delete-btn';
+  deleteBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (confirm('Delete this movie?')) {
+      container.remove();
+    }
+  });
+
+  container.appendChild(img);
+  container.appendChild(deleteBtn);
+
+  img.addEventListener('dragstart', dragStart);
+
+  if (isMobile()) {
+    img.addEventListener('click', function() {
+      currentSelectedPoster = container;
+      document.getElementById('mobileTierPopup').style.display = 'flex';
+    });
+  }
+
+  img.onload = () => {
+    unranked.appendChild(container);
+    movieInput.value = '';
+    movieInput.placeholder = "🎬 Try another one...";
+  };
+
+  img.onerror = () => {
+    alert("Error loading image. Try again?");
+  };
+}
+
   const img = document.createElement('img');
   img.src = data.Poster;
   img.alt = data.Title;
@@ -1092,3 +1138,4 @@ initMobilePosterClick();
 </script>
 </body>
 </html>
+
