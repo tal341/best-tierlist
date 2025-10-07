@@ -601,6 +601,7 @@ input[type="file"],
     </div>
   </div>
 </div>
+
 <script>
 const fileInput = document.getElementById('fileInput');
 const movieInput = document.getElementById('movieInput');
@@ -724,7 +725,8 @@ document.getElementById('showMoreBtn').addEventListener('click', async () => {
   const nextBatch = allSearchResults.slice(0, displayedResultsCount);
   showSearchResultsWithPosters(nextBatch);
 });
-  function addMovieToBoard(data) {
+
+function addMovieToBoard(data) {
   if (!data.Poster || data.Poster === "N/A") {
     alert("No poster available for this movie 🖼️");
     return;
@@ -747,13 +749,9 @@ document.getElementById('showMoreBtn').addEventListener('click', async () => {
       img.remove();
     }
   });
- const wrapper = document.createElement('div');
-wrapper.style.position = 'relative';
-wrapper.style.display = 'inline-block';
-wrapper.appendChild(img);
-wrapper.appendChild(deleteBtn);
+  img.appendChild(deleteBtn);
 
-wrapper.addEventListener('dragend', ...
+  img.addEventListener('dragstart', dragStart);
 
   if (isMobile()) {
     img.addEventListener('click', function() {
@@ -763,7 +761,7 @@ wrapper.addEventListener('dragend', ...
   }
 
   img.onload = () => {
-    unranked.appendChild(wrapper);
+    unranked.appendChild(img);
     movieInput.value = '';
     movieInput.placeholder = "🎬 Try another one...";
   };
@@ -772,6 +770,7 @@ wrapper.addEventListener('dragend', ...
     alert("Error loading image. Try again?");
   };
 }
+
 fileInput.addEventListener('change', (event) => {
   const files = event.target.files;
   for (const file of files) {
@@ -781,7 +780,7 @@ fileInput.addEventListener('change', (event) => {
       const img = document.createElement('img');
       img.src = e.target.result;
       img.classList.add('poster');
-     wrapper.draggable = true;
+      img.draggable = true;
       img.dataset.originalSrc = e.target.result;
 
       const deleteBtn = document.createElement('div');
@@ -795,7 +794,8 @@ fileInput.addEventListener('change', (event) => {
       });
       img.appendChild(deleteBtn);
 
-     wrapper.addEventListener('dragstart', ...
+      img.addEventListener('dragstart', dragStart);
+
       if (isMobile()) {
         img.addEventListener('click', function() {
           currentSelectedPoster = this;
@@ -808,7 +808,8 @@ fileInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
-  function dragStart(e) {
+
+function dragStart(e) {
   e.dataTransfer.setData('text/plain', e.target.src);
 }
 
@@ -956,7 +957,8 @@ historyModal.addEventListener('click', (e) => {
     historyModal.classList.remove('active');
   }
 });
-  function loadList(listName) {
+
+function loadList(listName) {
   const savedData = localStorage.getItem(listName);
   if (!savedData) return;
 
@@ -975,7 +977,7 @@ historyModal.addEventListener('click', (e) => {
         img.title = item.title;
         img.classList.add('poster');
         img.draggable = true;
-      wrapper.addEventListener('dragend', ...
+        img.addEventListener('dragstart', dragStart);
 
         const deleteBtn = document.createElement('div');
         deleteBtn.innerHTML = '×';
@@ -1008,7 +1010,8 @@ historyModal.addEventListener('click', (e) => {
       img.title = item.title;
       img.classList.add('poster');
       img.draggable = true;
-    wrapper.addEventListener('dragend', ...
+      img.addEventListener('dragstart', dragStart);
+
       const deleteBtn = document.createElement('div');
       deleteBtn.innerHTML = '×';
       deleteBtn.className = 'delete-btn';
@@ -1085,4 +1088,3 @@ initMobilePosterClick();
 </script>
 </body>
 </html>
-
